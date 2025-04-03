@@ -1,0 +1,109 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="estate_propriete_list">
+      <field name="name">estate.propriete.list</field>
+      <field name="model">estate.propriete</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="type_id"/>
+          <field name="superficie"/>
+          <field name="loyer_mensuel"/>
+          <field name="etat" widget="badge"
+                        decoration-success="etat == 'libre'"
+                        decoration-danger="etat  == 'occupee'"
+                        decoration-warning="etat == 'reservee'"/>
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="estate_propriete_form">
+      <field name="name">estate.propriete.form</field>
+      <field name="model">estate.propriete</field>
+      <field name="arch" type="xml">
+        <form>
+            <header>
+                <field name="etat" widget="statusbar"/>
+            </header>
+            <sheet>
+                <group>
+                    <group>
+                        <field name="name" required="1"/>
+                        <!--        adresses (commune, ville , pays, quartier)                -->
+                    </group>
+                    <group>
+                        <field name="type_id"/>
+                        <field name="superficie"/>
+                        <field name="loyer_mensuel"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page name="pieces" string="Pièces">
+                        <field name="piece_ids">
+                            <list>
+                                <field name="name"/>
+                                <field name="type_id"/>
+                                <field name="superficie"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page name="commodite" string="Commodités">
+                        <field name="commodite_ids">
+                            <list>
+                                <field name="name"/>
+                                <field name="piece_id"/>
+                                <field name="image" widget="image" class="oe_avatar"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page name="localisation" string="Localisation">
+                        <field name="localisation_id">
+                            <list>
+                                <field name="pays"/>
+                                <field name="ville"/>
+                                <field name="commune"/>
+                                <field name="quartier"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+            <!-- Chatter -->
+            <chatter/>
+        </form>
+      </field>
+    </record>
+
+      <record id="estate_propriete_search" model="ir.ui.view">
+          <field name="name">estate.propriete.search</field>
+          <field name="model">estate.propriete</field>
+          <field name="arch" type="xml">
+            <search>
+              <field name="name"/>
+              <field name="etat"/>
+              <field name="type_id"/>
+
+              <filter name="filtre_libre" string="Libres" domain="[('etat','=','libre')]"/>
+              <filter name="filtre_occupee" string="Occupées" domain="[('etat','=','occupee')]"/>
+              <filter name="filtre_reservee" string="Réservées" domain="[('etat','=','reservee')]"/>
+
+              <separator/>
+
+              <group expand="1" string="Group By">
+                <filter name="group_etat" string="État" context="{'group_by':'etat'}"/>
+                <filter name="group_type" string="Type de pièce" context="{'group_by':'type_id'}"/>
+              </group>
+            </search>
+          </field>
+        </record>
+
+
+    <record model="ir.actions.act_window" id="propriete_action">
+      <field name="name">Propriétés</field>
+      <field name="res_model">estate.propriete</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+  </data>
+</odoo>

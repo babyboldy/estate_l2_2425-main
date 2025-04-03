@@ -1,0 +1,108 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="estate_location_list">
+      <field name="name">estate.location.list</field>
+      <field name="model">estate.location</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="locataire_id"/>
+          <field name="propriete_id"/>
+          <field name="date_de_reservation"/>
+          <field name="date_de_debut"/>
+          <field name="duree_en_annee"/>
+          <field name="date_de_fin"/>
+          <field name="frequence"/>
+          <field name="loyer"/>
+          <field name="etat" widget="badge"
+                        decoration-info="etat == 'brouillon'"
+                        decoration-success="etat == 'en_cours'"
+                        decoration-danger="etat  in ['annulee', 'terminee']"
+                        decoration-warning="etat == 'validee'"/>
+        </list>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="estate_location_form">
+      <field name="name">estate.location.form</field>
+      <field name="model">estate.location</field>
+      <field name="arch" type="xml">
+        <form>
+            <header>
+                <field name="etat" widget="statusbar"/>
+            </header>
+            <sheet>
+                <div class="oe_title">
+                    <h1>
+                        <field widget="text" name="name" placeholder="LOC/PRO1/0001" />
+                    </h1>
+                </div>
+                <group>
+                    <group>
+                        <field name="locataire_id" required="1"/>
+                        <field name="propriete_id" required="1"/>
+                        <field name="frequence"/>
+                        <field name="loyer"/>
+                        <!--        adresses (commune, ville , pays, quartier)                -->
+                    </group>
+                    <group>
+                        <field name="date_de_reservation"/>
+                        <field name="date_de_debut"/>
+                        <field name="duree_en_annee"/>
+                        <field name="date_de_fin"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page name="etats_des_lieux" string="Etats des Lieux">
+                        <field name="etats_des_lieux_ids">
+                            <list>
+                                <field name="name"/>
+                                <field name="type"/>
+                                <field name="date"/>
+                                <field name="responsable_id"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+            <!-- Chatter -->
+            <chatter/>
+        </form>
+      </field>
+    </record>
+
+     <record id="estate_location_search" model="ir.ui.view">
+         <field name="name">estate.location.search</field>
+         <field name="model">estate.location</field>
+         <field name="arch" type="xml">
+             <search>
+              <field name="name"/>
+              <field name="locataire_id"/>
+              <field name="propriete_id"/>
+              <field name="frequence"/>
+              <field name="etat"/>
+
+              <filter name="filtre_en_cours" string="En cours" domain="[('etat','=','en_cours')]" />
+              <filter name="filtre_validee" string="Validée" domain="[('etat','=','validee')]" />
+
+              <separator/>
+
+              <group expand="1" string="Group By">
+                <filter name="group_frequence" string="Fréquence" context="{'group_by':'frequence'}"/>
+                <filter name="group_etat" string="État" context="{'group_by':'etat'}"/>
+                <filter name="group_locataire" string="Locataire" context="{'group_by':'locataire_id'}"/>
+              </group>
+            </search>
+          </field>
+        </record>
+
+
+    <record model="ir.actions.act_window" id="location_action">
+      <field name="name">Locations</field>
+      <field name="res_model">estate.location</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+  </data>
+</odoo>

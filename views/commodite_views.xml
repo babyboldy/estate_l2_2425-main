@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+
+    <!-- Vue liste -->
+    <record id="estate_commodite_list" model="ir.ui.view">
+      <field name="name">estate.commodite.list</field>
+      <field name="model">estate.commodite</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="piece_id"/>
+          <field name="propriete_id"/>
+          <field name="image" widget="image"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- Vue formulaire -->
+    <record id="estate_commodite_form" model="ir.ui.view">
+      <field name="name">estate.commodite.form</field>
+      <field name="model">estate.commodite</field>
+      <field name="arch" type="xml">
+        <form>
+            <header>
+
+              </header>
+          <sheet>
+            <group>
+              <field name="name" required="1"/>
+              <field name="piece_id"/>
+              <field name="propriete_id" readonly="1"/>
+              <field name="image" widget="image" class="oe_avatar"/>
+            </group>
+          </sheet>
+          <chatter/>
+        </form>
+      </field>
+    </record>
+
+    <!-- Vue recherche -->
+    <record id="estate_commodite_search" model="ir.ui.view">
+      <field name="name">estate.commodite.search</field>
+      <field name="model">estate.commodite</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <field name="piece_id"/>
+          <field name="propriete_id"/>
+
+          <group expand="1" string="Group By">
+            <filter name="group_piece" string="Pièce" context="{'group_by': 'piece_id'}"/>
+            <filter name="group_propriete" string="Propriété" context="{'group_by': 'propriete_id'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <!-- Action -->
+    <record id="estate_commodite_action" model="ir.actions.act_window">
+      <field name="name">Commodités</field>
+      <field name="res_model">estate.commodite</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+  </data>
+</odoo>

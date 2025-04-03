@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="report_commodite_template">
+    <t t-call="web.internal_layout">
+      <div class="page">
+        <h2>Rapport de la commodité</h2>
+        <p><strong>Nom :</strong> <t t-esc="object.name"/></p>
+        <p><strong>Pièce :</strong> <t t-esc="object.piece_id.name"/></p>
+        <p><strong>Propriété :</strong> <t t-esc="object.propriete_id.name"/></p>
+        <t t-if="object.image">
+          <p><strong>Image :</strong></p>
+          <img t-att-src="'data:image/png;base64,%s' % object.image" style="max-height:300px;" />
+        </t>
+      </div>
+    </t>
+  </template>
+</odoo>

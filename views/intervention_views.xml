@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- Vue liste -->
+    <record id="estate_intervention_list" model="ir.ui.view">
+      <field name="name">estate.intervention.list</field>
+      <field name="model">estate.intervention</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="date"/>
+          <field name="type"/>
+          <field name="propriete_id"/>
+          <field name="etat" widget="badge"
+                        decoration-info="etat == 'planifiee'"
+                        decoration-warning="etat == 'en_cours'"
+                        decoration-success="etat == 'terminee'"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- Vue formulaire -->
+    <record id="estate_intervention_form" model="ir.ui.view">
+      <field name="name">estate.intervention.form</field>
+      <field name="model">estate.intervention</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <field name="etat" widget="statusbar" statusbar_visible="planifiee,en_cours,terminee"/>
+          </header>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="date"/>
+              <field name="type"/>
+              <field name="propriete_id"/>
+              <field name="description"/>
+            </group>
+          </sheet>
+          <chatter/>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="estate_intervention_search" model="ir.ui.view">
+      <field name="name">estate.intervention.search</field>
+      <field name="model">estate.intervention</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <field name="date"/>
+          <field name="propriete_id"/>
+          <filter name="filtre_en_cours" string="En cours" domain="[('etat','=','en_cours')]"/>
+          <filter name="filtre_termine" string="Terminée" domain="[('etat','=','terminee')]"/>
+          <group expand="1" string="Group By">
+            <filter name="group_propriete" string="Propriété" context="{'group_by': 'propriete_id'}"/>
+            <filter name="group_type" string="Type" context="{'group_by': 'type'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <!-- Action -->
+    <record id="estate_intervention_action" model="ir.actions.act_window">
+      <field name="name">Interventions</field>
+      <field name="res_model">estate.intervention</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="action_report_commodite" model="ir.actions.report">
+    <field name="name">Rapport Commodité</field>
+    <field name="model">estate.commodite</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">estate.report_commodite_template</field>
+    <field name="report_file">estate.report_commodite_template</field>
+    <field name="binding_model_id" ref="model_estate_commodite"/>
+    <field name="binding_type">report</field>
+    <field name="print_report_name">'Rapport_Commodite_%s' % (object.name or 'SansNom')</field>
+  </record>
+</odoo>
